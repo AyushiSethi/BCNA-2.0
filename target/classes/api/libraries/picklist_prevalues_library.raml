@@ -1,0 +1,37 @@
+#%RAML 1.0 Library
+
+types:
+  picklistPrevalues:
+    properties:
+      PicklistsGroupedByObject:
+        type: array
+        required: true
+        items:
+          type: object
+          properties:
+            ObjectName:
+              type: string
+              required: true
+              example: "Contact"
+              description: "Name of the Salesforce object."
+            PicklistFieldAliases:
+              type: array
+              required: true
+              items:
+                type: string
+                example: "Would_like_to_see_information_for__c"
+                description: "List of picklist field names within the object."
+        example: [
+            {
+                "ObjectName": "Contact",
+                "PicklistFieldAliases": [
+                    "Would_like_to_see_information_for__c"
+                ]
+            },
+            {
+                "ObjectName": "npe5__Affiliation__c",
+                "PicklistFieldAliases": [
+                    "Attribute__c"
+                ]
+            }
+        ]

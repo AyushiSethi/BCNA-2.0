@@ -1,0 +1,33 @@
+#%RAML 1.0 Library
+
+uses:
+  matchingField:  matching_field_library.raml
+
+types:
+  recordUpsert:
+    type: object
+    properties:
+      MatchingField?:
+        type: matchingField.matchingField
+        required: false
+        example:
+          MatchingFieldName: "Id"
+          MatchingFieldValue: "0039p00000XkzVLAAZ"
+      ObjectName:
+        type: string
+        required: true
+        example: "Referral__c"
+        minLength: 1
+      ObjectValue:
+        type: object
+        required: true
+        example:
+          Patient__c: "0042p00000XkzVLXYZ"
+          Health_Professional__c: "0061p00000XkzVLCBA"
+          Referral_Notify__c: true
+      dFields:
+        type: string[]
+        required: false
+      dtFields:
+        type: string[]
+        required: false

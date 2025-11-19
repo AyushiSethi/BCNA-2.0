@@ -1,0 +1,57 @@
+{
+  "action": "user_add",
+  "payload": {
+    "user": {
+      "userID": 76,
+      "name": "AS1",
+      "url": "https://bcnaforum.vanillastaging.com/profile/AS1",
+      "photoUrl": "https://w1.vanillicon.com/v2/194eb87ee3bb0d0f7d2fa6830117c41a.svg",
+      "dateLastActive": "2024-03-05T06:55:42+00:00",
+      "banned": 0,
+      "private": false,
+      "label": "",
+      "profileFields": {
+        "DateOfBirth": "2021-11-03T00:00:00+00:00",
+        "Diagnosis_Type__c": "Early breast cancer",
+        "FirstName": "A",
+        "How_did_you_hear_about_us__c": "Other health professional",
+        "LastName": "S1",
+        "Year_of_Early_Diagnosis__c": "2024-03-01T00:00:00+00:00"
+      },
+      "bypassSpam": false,
+      "email": "ayushi.sethi+1@salesfix.com.au",
+      "emailConfirmed": true,
+      "dateInserted": "2024-03-05T06:55:42+00:00",
+      "dateUpdated": null,
+      "profilePhotoUrl": "https://w1.vanillicon.com/v2/194eb87ee3bb0d0f7d2fa6830117c41a.svg",
+      "points": 0,
+      "roles": [
+        {
+          "roleID": 4,
+          "name": "Applicant"
+        }
+      ],
+      "showEmail": false,
+      "countDiscussions": 0,
+      "countComments": 0,
+      "countPosts": 0,
+      "hashMethod": "Vanilla",
+      "countVisits": 0,
+      "punished": 0
+    }
+  },
+  "sender": {
+    "userID": 0,
+    "name": "guest",
+    "url": "https://bcnaforum.vanillastaging.com/profile/guest",
+    "photoUrl": "https://w3.vanillicon.com/v2/310b86e0b62b828562fc91c7be5380a9.svg",
+    "dateLastActive": "2024-03-05T06:56:14+00:00",
+    "banned": 0,
+    "private": false,
+    "profileFields": [],
+    "email": "guest@example.com"
+  },
+  "site": {
+    "siteID": 6028015
+  }
+}

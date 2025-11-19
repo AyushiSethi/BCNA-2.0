@@ -1,0 +1,12 @@
+{
+	"MatchingField": {
+		"MatchingFieldName": "Id",
+		"MatchingFieldValue": "0069p00000JBIBZAA5"
+	},
+	"ObjectName": "Opportunity",
+	"Fields": [
+		"Id",
+		"Name",
+		"npsp__Primary_Contact__c"
+	]
+}

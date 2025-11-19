@@ -1,0 +1,34 @@
+#%RAML 1.0 Library
+
+uses:
+  matchingField:  matching_field_library.raml
+
+types:
+  upsertUsers:
+    properties:
+      MatchingField?:
+        type: matchingField.matchingField
+        required: false
+        example:
+          MatchingFieldName: "Id"
+          MatchingFieldValue: "0039p00000XkzVLAAZ"
+      FirstName:
+        type: string
+        required: true
+        example: "Rizwan"
+        minLength: 1
+      LastName: 
+        type: string
+        required: true
+        example: "Ahmed"
+        minLength: 1
+      Email:
+        type: string
+        required: true
+        example: "rizwan.ahmed@salesfix.com.au"
+        minLength: 1
+      Breast_Cancer_Experience__c:
+        type: string
+        required: false
+        example: "test"
+        minLength: 1
