@@ -1,0 +1,31 @@
+#%RAML 1.0 Library
+
+uses:
+  recordMatching:  record_matching_library.raml
+
+types:
+  upsertUsers:
+    properties:
+      RecordMatching?:
+        type: recordMatching.recordMatching
+        required: false
+      FirstName:
+        type: string
+        required: true
+        example: "Jonty"
+        minLength: 1
+      LastName: 
+        type: string
+        required: true
+        example: "Schmidt"
+        minLength: 1
+      Email:
+        type: string
+        required: true
+        example: "jonty@koben.com.au"
+        minLength: 1
+      Breast_Cancer_Experience__c:
+        type: string
+        required: false
+        example: "test"
+        minLength: 1

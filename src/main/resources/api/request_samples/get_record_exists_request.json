@@ -1,0 +1,20 @@
+{
+  "RecordMatching": {
+    "MatchingFields": [
+      {
+        "MatchingFieldName": "OpportunityId",
+        "MatchingFieldValue": "0069p00000KajpVAAR"
+      },
+      {
+        "MatchingFieldName": "Product2Id",
+        "MatchingFieldValue": "01t9p00000AWdBlAAL"
+      }
+    ],
+    "ThrowErrorIfMatchFails": false
+  },
+  "MatchingField": {
+    "MatchingFieldName": "Id",
+    "MatchingFieldValue": "0039p00000XkzVLAAZ"
+  },
+  "ObjectName": "Referral__c"
+}

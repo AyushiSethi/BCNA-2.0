@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+    <flow name="bcna-exp-api-main">
+        <http:listener config-ref="bcna-exp-api-httpListenerConfig" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[error.errorMessage.attributes.statusCode default 500]">
+                <http:body><![CDATA[#[error.errorMessage.payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="bcna-exp-api-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:BAD_REQUEST">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Bad request"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">400</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Method not allowed"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">405</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not acceptable"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">406</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Unsupported media type"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">415</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not Implemented"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">501</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="bcna-exp-api-console">
+        <http:listener config-ref="bcna-exp-api-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="bcna-exp-api-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="post:\waivenet\submit_order:application\json:bcna-exp-api-config">
+        <async doc:name="Async" doc:id="f5f23f24-1a37-47ed-8598-61faba34553c">
+            <flow-ref doc:name="Flow Reference" doc:id="fcd4be2d-1ec8-49e3-bb5e-26cc0f54fc24" name="waivenet-submit-order-impl" />
+        </async>
+        <set-payload value="#[%dw 2.0&#xA;output application/json&#xA;---&#xA;{&#xA; &quot;Message&quot; : &quot;Order Request Submitted&quot;&#xA;}]" doc:name="Set Payload" doc:id="46493f8a-95e3-4b3a-9664-e783b9a04a2f" />
+    </flow>
+    <flow name="post:\vanillaSoft\upsert_contact:application\json:bcna-exp-api-config">
+        <flow-ref doc:name="Flow Reference" doc:id="0586f35c-f806-46aa-a1d7-9be7e4fcfdc4" name="vanilla-soft-upsert-contact-impl" />
+    </flow>
+    <!-- [STUDIO:"post:\salesforce\matching_contact:application\json:bcna-exp-api-config"]<flow name="post:\salesforce\matching_contact:application\json:bcna-exp-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+&#45;&#45;-
+{
+  RecordID: "003xxxXXXXxxxXX"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}&#93;&#93;></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow> [STUDIO] -->
+    <flow name="post:\salesforce\matching_contact:application\json:bcna-exp-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  RecordID: "003xxxXXXXxxxXX"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\umbraco\upsert_users:application\json:bcna-exp-api-config">
+        <flow-ref doc:name="upsert-users-flow" doc:id="c02faac9-a27c-489e-916b-db5325837996" name="upsert-users-flow" />
+    </flow>
+	<flow name="post:\umbraco\get_picklist_prevalues:application\json:bcna-exp-api-config">
+        <flow-ref doc:name="get-picklist-prevalues-flow" doc:id="bbf4b08d-b484-4070-b26a-0c16fe9cae31" name="get-picklist-prevalues-flow" />
+    </flow>
+    <flow name="post:\umbraco\user_exists:application\json:bcna-exp-api-config">
+        <flow-ref doc:name="check-user-exists-flow" doc:id="cc585b3a-f400-4593-aaf0-4143b012bc46" name="check-user-exists-flow" />
+    </flow>
+    <flow name="post:\umbraco\user_details:application\json:bcna-exp-api-config">
+        <flow-ref doc:name="retrieve-user-details-flow" doc:id="be25ca51-af87-4510-9ca4-ecdf6d08b7b1" name="retrieve-user-details-flow" />
+    </flow>
+    <flow name="post:\umbraco\user_deactivate:application\json:bcna-exp-api-config">
+		<flow-ref doc:name="user-deactivate-flow" doc:id="0134eb85-b59d-4091-9fd2-9007f3e71d2b" name="user-deactivate-flow"/>
+    </flow>
+	<flow name="post:\umbraco\record_upsert:application\json:bcna-exp-api-config" doc:id="8198b288-91af-4679-b645-b9576fecb4fd" >
+		<flow-ref doc:name="record-upsert-flow" doc:id="e8f183bf-cb75-4a34-b04d-96f7bc93fa58" name="record-upsert-flow"/>
+	</flow>
+	<flow name="post:\umbraco\records_upsert:application\json:bcna-exp-api-config" doc:id="6802dee8-ac8f-4a02-b0b5-c645dac5cfc3">
+		<flow-ref doc:name="records-upsert-flow" doc:id="8a2b93e0-8ffd-43c1-bc34-40209e50fe47" name="records-upsert-flow" />
+	</flow>
+	<flow name="post:\umbraco\get_record_exists:application\json:bcna-exp-api-config" doc:id="89056594-84a9-4c40-ad6d-1238da9468d5" >
+		<flow-ref doc:name="Flow Reference" doc:id="672414c3-e79a-4b82-a0a3-45ed86475719" name="get-record-exists-flow"/>
+	</flow>
+	<flow name="post:\umbraco\get_record:application\json:bcna-exp-api-config" doc:id="1cf1e2ca-bcae-4a15-bb9c-2f6dc977525a" >
+		<flow-ref doc:name="Flow Reference" doc:id="4de8e46e-40bb-4ddc-8ac1-7e97c8955b7a" name="get-record-flow" />
+	</flow>
+</mule>

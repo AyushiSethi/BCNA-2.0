@@ -1,0 +1,16 @@
+{
+    "PicklistsGroupedByObject": [
+        {
+            "ObjectName": "Contact",
+            "PicklistFieldAliases": [
+                "Would_like_to_see_information_for__c"
+            ]
+        },
+        {
+            "ObjectName": "npe5__Affiliation__c",
+            "PicklistFieldAliases": [
+                "Attribute__c"
+            ]
+        }
+    ]
+}

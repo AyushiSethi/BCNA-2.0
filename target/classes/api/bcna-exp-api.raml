@@ -1,0 +1,178 @@
+#%RAML 1.0
+title: bcna-exp-api
+
+protocols:
+  - HTTPS
+
+uses:
+  submitOrderType:  libraries/submit_order.raml
+  upsertUsers: libraries/upsert_user_library.raml
+  userExists: libraries/user_exists_library.raml
+  picklistPrevalues: libraries/picklist_prevalues_library.raml
+  userDetails : libraries/user_details_library.raml
+  userDeactivate : libraries/user_deactivate_library.raml
+  recordUpsert : libraries/record_upsert_library.raml
+  recordsUpsert : libraries/records_upsert_library.raml
+  getRecordExists : libraries/get_record_exists_library.raml
+  getRecord : libraries/get_record_library.raml
+
+traits:
+  errorResponse: !include traits/error_trait.raml
+
+/waivenet:
+  /submit_order:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: submitOrderType.submitOrderType
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/submit_order_response.json
+/vanillaSoft:
+  /upsert_contact:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          example: !include request_samples/vanilla_soft_upsert_contact.json
+            
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/vanilla_soft_upsert_contact_response.json
+
+/salesforce:
+  /matching_contact:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          example: !include request_samples/salesforce_matching_contact.json
+            
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/salesforce_matching_contact_response.json
+
+/umbraco:
+  /upsert_users:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: upsertUsers.upsertUsers
+          example: !include request_samples/upsert_user_request.json 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/record_upsert_response.json
+
+  /get_picklist_prevalues:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: picklistPrevalues.picklistPrevalues
+          example: !include request_samples/get_picklist_prevalues_request.json  
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/get_picklist_prevalues_response.json  
+
+  /user_exists:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: userExists.userExists
+          example:  !include request_samples/user_matching_request.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/user_exists_response.json
+
+  /user_details:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: userDetails.userDetails
+          example: !include request_samples/user_matching_request.json  
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/user_details_response.json
+  
+  /user_deactivate:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: userDeactivate.userDeactivate
+          example: !include request_samples/user_matching_request.json  
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/user_deactivate_response.json
+
+  /record_upsert:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: recordUpsert.recordUpsert
+          example: !include request_samples/record_upsert_request.json 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/record_upsert_response.json
+              
+  /records_upsert:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: recordsUpsert.recordsUpsert
+          example: !include request_samples/records_upsert_request.json 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/records_upsert_response.json
+
+  /get_record_exists:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: getRecordExists.getRecordExists
+          example: !include request_samples/get_record_exists_request.json 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/get_record_exists_response.json
+
+  /get_record:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: getRecord.getRecord
+          example: !include request_samples/get_record_request.json 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/get_record_response.json

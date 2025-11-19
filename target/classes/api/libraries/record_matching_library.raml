@@ -1,0 +1,17 @@
+#%RAML 1.0 Library
+
+uses:
+  matchingField:  matching_field_library.raml
+
+types:
+  recordMatching:
+    type: object
+    properties:
+      MatchingFields:
+        type: array
+        items:  matchingField.matchingField
+        minItems: 1
+        required: true
+      ThrowErrorIfMatchFails?:
+        type: boolean
+        required: true

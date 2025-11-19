@@ -1,0 +1,27 @@
+#%RAML 1.0 Library
+
+uses:
+  matchingField:  matching_field_library.raml
+
+types:
+  getRecord:
+    type: object
+    properties:
+      MatchingField:
+        type: matchingField.matchingField
+        required: true
+        example:
+          MatchingFieldName: "Id"
+          MatchingFieldValue: "0039p00000XkzVLAAZ"
+      ObjectName:
+        type: string
+        required: true
+        example: "Opportunity"
+        minLength: 1
+      Fields:
+        type: array
+        required: true
+        items:
+          type: string
+          example: "npsp__Primary_Contact__c"
+          description: "API names of all Salesforce fields"

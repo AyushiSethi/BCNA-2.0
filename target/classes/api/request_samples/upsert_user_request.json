@@ -1,0 +1,22 @@
+{
+	"RecordMatching": {
+		"MatchingFields": [
+			{
+				"MatchingFieldName": "Id",
+				"MatchingFieldValue": "003W2000008a3fZIAQ"
+			},
+			{
+				"MatchingFieldName": "Email",
+				"MatchingFieldValue": "jonty@koben.com.au"
+			}
+		],
+		"ThrowErrorIfMatchFails": true
+	},
+	"Email": "jonty@koben.com.au",
+	"FirstName": "Jonty",
+	"LastName": "Schmidt",
+	"Current_Diagnosis_Date__c": "2024-08-20",
+	"GenderIdentity": null,
+	"Diagnosis_Type__c": null,
+	"Breast_Cancer_Experience__c" : "Other"
+}

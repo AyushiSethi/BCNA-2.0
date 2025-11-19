@@ -1,0 +1,33 @@
+{
+  "Success": true,
+  "Data": [
+      {
+          "objectName": "Contact",
+          "fieldName": "Would_like_to_see_information_for__c",
+          "options": [
+              {
+                  "label": "First peoples",
+                  "value": "First peoples"
+              },
+              {
+                  "label": "LGBTIQ+",
+                  "value": "LGBTIQ+"
+              }
+          ]
+      },
+      {
+          "objectName": "npe5__Affiliation__c",
+          "fieldName": "Attribute__c",
+          "options": [
+              {
+                  "label": "Bakery Franchise",
+                  "value": "Bakery Franchise"
+              },
+              {
+                  "label": "Individual Bakery",
+                  "value": "Individual Bakery"
+              }
+          ]
+      }
+  ]
+}

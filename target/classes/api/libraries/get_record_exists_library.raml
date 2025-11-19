@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+
+uses:
+  matchingField:  matching_field_library.raml
+  recordMatching:  record_matching_library.raml
+
+types:
+  getRecordExists:
+    type: object
+    properties:
+      RecordMatching?:
+        type: recordMatching.recordMatching
+        required: false
+      MatchingField?:
+        type: matchingField.matchingField
+        required: false
+        example:
+          MatchingFieldName: "Id"
+          MatchingFieldValue: "0039p00000XkzVLAAZ"
+      ObjectName:
+        type: string
+        required: true
+        example: "Referral__c"
+        minLength: 1

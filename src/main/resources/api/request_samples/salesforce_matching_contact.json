@@ -1,0 +1,19 @@
+{
+    "matchingCriteria" : {
+        "FirstName" : "",
+    "LastName" : "",
+    "Email" : ""
+    },
+    "insertRecord" : {
+			"FirstName" : "",
+	    "LastName" : "",
+	    "Email" : "",
+	    "Birthdate" : ""
+		},
+		"updateRecord" : {
+			"Email" : ""
+		},
+    "dateFields" : ["Initial_Diagnosis_Date__c","Birthdate"],
+    "dateTimeFields" : ["Inserted_Date_Time__c","Last_Active_Date_Time__c","Updated_Date_Time__c"]
+
+}

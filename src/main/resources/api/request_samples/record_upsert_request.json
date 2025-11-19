@@ -1,0 +1,14 @@
+{
+  "MatchingField": {
+    "MatchingFieldName": "Id",
+    "MatchingFieldValue": "0039p00000XkzVLAAZ"
+  },
+  "ObjectName": "Referral__c",
+  "ObjectValue": {
+    "Patient__c": "0042p00000XkzVLXYZ",
+    "Health_Professional__c": "0061p00000XkzVLCBA",
+    "Referral_Notify__c": true
+  },
+  "dFields": [],
+  "dtFields": ["CreateDate"]
+}

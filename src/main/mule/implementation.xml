@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="waivenet-submit-order-impl" doc:id="c69252e2-d48f-47aa-8c31-338aa3d224b1" >
+		<http:request method="POST" doc:name="Request" doc:id="cb933a1d-9383-4179-b1e6-983856acb9dd" url="${secure::mule.prcAPI}/waivenet/submit_order" responseTimeout="60000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="vanilla-soft-upsert-contact-impl" doc:id="aefd7465-65db-471f-a80a-7cb78c09b221" >
+		<choice doc:name="Choice" doc:id="d4286a27-e0d2-41c7-b38f-0a05f4271f51" >
+			<when expression="#[payload.action != 'user_rankUpdate']">
+				<http:request method="POST" doc:name="Request" doc:id="72d57fcf-cf9c-43ae-b806-faf57a1b3372" url="${secure::mule.prcAPI}/vanillaSoft/upsert_contact" >
+					<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+				</http:request>
+			</when>
+		</choice>
+	</flow>
+	<flow name="upsert-users-flow" doc:id="d1ffdbd2-784e-4fcd-88ef-23232982b16c" >
+		<http:request method="POST" doc:name="Request" doc:id="2064b851-b8b4-4576-be64-565075d7f5a2" url="${secure::mule.prcAPI}/umbraco/upsert_users" responseTimeout="60000">
+			<http:body ><![CDATA[#[%dw 2.0
+output application/json
+---
+payload]]]></http:body>
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="get-picklist-prevalues-flow" doc:id="f532e235-96e1-4128-9b7d-55f1b687a7f1" >
+		<http:request method="POST" doc:name="Request" doc:id="6b5b40df-dd62-4d20-aa80-3edfa3ccb4ba" url="${secure::mule.prcAPI}/umbraco/get_picklist_prevalues" sendCorrelationId="NEVER" responseTimeout="60000">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="check-user-exists-flow" doc:id="9e57f00e-425d-450d-8c66-b2c767a63c55" >
+		<http:request method="POST" doc:name="Request" doc:id="cf2875f3-3e0e-42ef-952b-0d0fa8416ac1" url="${secure::mule.prcAPI}/umbraco/user_exists" sendCorrelationId="NEVER" responseTimeout="60000">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="retrieve-user-details-flow" doc:id="f221e9a7-d474-4091-b879-bc6d868cdab5" >
+		<logger level="INFO" doc:name="Logger" doc:id="2d9abde7-cc5e-45f3-a0d4-c08ca2cc7921" message='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"api": "exp-api",&#10;	"flow": "retrieve-user-details-flow",&#10;	"payload": payload&#10;}]'/>
+		<http:request method="POST" doc:name="Request" doc:id="b2a2270a-9a06-471e-82f3-fef508288549" url="${secure::mule.prcAPI}/umbraco/user_details" sendCorrelationId="NEVER" responseTimeout="60000">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="user-deactivate-flow" doc:id="ece6986a-f3fe-4769-b061-a1d316b22a82" >
+		<http:request method="POST" doc:name="user_deactivate" doc:id="36b072aa-d448-409c-8932-875d8b0b3bda" url="${secure::mule.prcAPI}/umbraco/user_deactivate" sendCorrelationId="NEVER" responseTimeout="60000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="record-upsert-flow" doc:id="9ffff7d1-1fdf-40d3-ba0b-857bcc1a4535" >
+		<http:request method="POST" doc:name="record_upsert" doc:id="10ea9950-6403-4c91-9575-e086248563dd" url="${secure::mule.prcAPI}/umbraco/record_upsert" sendCorrelationId="NEVER" responseTimeout="60000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="records-upsert-flow" doc:id="63a99b8d-a7f8-44a5-bfa6-dfbbfa0f940b">
+		<http:request method="POST" doc:name="records_upsert" doc:id="589bb8cc-1bb6-4aa0-b868-a27adfd67bec" url="${secure::mule.prcAPI}/umbraco/records_upsert" sendCorrelationId="NEVER" responseTimeout="60000">
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="get-record-exists-flow" doc:id="fedab5f5-d50f-42b1-9a4f-0e9e962bf014" >
+		<http:request method="POST" doc:name="get_record_exists" doc:id="df8f5ad2-8b3a-406e-b2ef-2c3d424b3d68" url="${secure::mule.prcAPI}/umbraco/get_record_exists" sendCorrelationId="NEVER" responseTimeout="60000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="get-record-flow" doc:id="140784f5-e988-4064-9aab-0978815368bc" >
+		<http:request method="POST" doc:name="get_record" doc:id="f741c53c-9486-41c4-a93a-f1de9ab56204" url="${secure::mule.prcAPI}/umbraco/get_record" sendCorrelationId="NEVER" responseTimeout="60000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
+</mule>
