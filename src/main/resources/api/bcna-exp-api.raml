@@ -12,6 +12,7 @@ uses:
   userDetails : libraries/user_details_library.raml
   userDeactivate : libraries/user_deactivate_library.raml
   recordUpsert : libraries/record_upsert_library.raml
+  recordsUpsert : libraries/records_upsert_library.raml
   getRecordExists : libraries/get_record_exists_library.raml
   getRecord : libraries/get_record_library.raml
 
@@ -136,6 +137,19 @@ traits:
           body:
             application/json:
               example: !include response_samples/record_upsert_response.json
+              
+  /records_upsert:
+    post:
+      is: errorResponse
+      body:
+        application/json:
+          type: recordsUpsert.recordsUpsert
+          example: !include request_samples/records_upsert_request.json 
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include response_samples/records_upsert_response.json
 
   /get_record_exists:
     post:

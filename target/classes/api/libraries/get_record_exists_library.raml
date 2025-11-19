@@ -2,14 +2,18 @@
 
 uses:
   matchingField:  matching_field_library.raml
+  recordMatching:  record_matching_library.raml
 
 types:
   getRecordExists:
     type: object
     properties:
-      MatchingField:
+      RecordMatching?:
+        type: recordMatching.recordMatching
+        required: false
+      MatchingField?:
         type: matchingField.matchingField
-        required: true
+        required: false
         example:
           MatchingFieldName: "Id"
           MatchingFieldValue: "0039p00000XkzVLAAZ"

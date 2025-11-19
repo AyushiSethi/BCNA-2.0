@@ -1,0 +1,44 @@
+#%RAML 1.0 Library
+usage: Types for record upsert requests
+
+uses:
+  matchingField: matching_field_library.raml
+
+types:
+  UpsertRecordItem:
+    type: object
+    properties:
+      ObjectValue:
+        type: object
+        required: true
+        example:
+          Patient__c: "0042p00000XkzVLXYZ"
+          Health_Professional__c: "0061p00000XkzVLCBA"
+          Referral_Notify__c: true
+      # Optional per-record value when MatchingFieldName != "Id"
+      MatchingFieldValue?:
+        type: matchingField.matchingField
+
+  recordsUpsert:
+    type: object
+    properties:
+      ObjectName:
+        type: string
+        required: true
+        minLength: 1
+        example: "Referral__c"
+
+      Records:
+        type: array
+        minItems: 1
+        items: UpsertRecordItem
+
+      dFields?:
+        type: array
+        items: string
+        example: ["CreateDate"]
+
+      dtFields?:
+        type: array
+        items: string
+        example: ["CreateDateTime"]

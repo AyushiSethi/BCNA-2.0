@@ -5,7 +5,7 @@
 	<artifactId>bcna-exp-api</artifactId>
 	<version>1.0.9</version>
 	<packaging>mule-application</packaging>
-	<name>bcna-exp-api-dev</name>
+	<name>bcna-exp-api-uat</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

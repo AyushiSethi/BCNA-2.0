@@ -93,6 +93,16 @@ payload]]]></http:body>
 }]]]></http:headers>
 		</http:request>
 	</flow>
+	<flow name="records-upsert-flow" doc:id="63a99b8d-a7f8-44a5-bfa6-dfbbfa0f940b">
+		<http:request method="POST" doc:name="records_upsert" doc:id="589bb8cc-1bb6-4aa0-b868-a27adfd67bec" url="${secure::mule.prcAPI}/umbraco/records_upsert" sendCorrelationId="NEVER" responseTimeout="60000">
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	"client_secret" : Mule::p('secure::mule.client_secret'),
+	"client_id" : Mule::p('secure::mule.client_id')
+}]]]></http:headers>
+		</http:request>
+	</flow>
 	<flow name="get-record-exists-flow" doc:id="fedab5f5-d50f-42b1-9a4f-0e9e962bf014" >
 		<http:request method="POST" doc:name="get_record_exists" doc:id="df8f5ad2-8b3a-406e-b2ef-2c3d424b3d68" url="${secure::mule.prcAPI}/umbraco/get_record_exists" sendCorrelationId="NEVER" responseTimeout="60000" >
 			<http:headers ><![CDATA[#[output application/java

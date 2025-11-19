@@ -170,6 +170,9 @@ output application/json
 	<flow name="post:\umbraco\record_upsert:application\json:bcna-exp-api-config" doc:id="8198b288-91af-4679-b645-b9576fecb4fd" >
 		<flow-ref doc:name="record-upsert-flow" doc:id="e8f183bf-cb75-4a34-b04d-96f7bc93fa58" name="record-upsert-flow"/>
 	</flow>
+	<flow name="post:\umbraco\records_upsert:application\json:bcna-exp-api-config" doc:id="6802dee8-ac8f-4a02-b0b5-c645dac5cfc3">
+		<flow-ref doc:name="records-upsert-flow" doc:id="8a2b93e0-8ffd-43c1-bc34-40209e50fe47" name="records-upsert-flow" />
+	</flow>
 	<flow name="post:\umbraco\get_record_exists:application\json:bcna-exp-api-config" doc:id="89056594-84a9-4c40-ad6d-1238da9468d5" >
 		<flow-ref doc:name="Flow Reference" doc:id="672414c3-e79a-4b82-a0a3-45ed86475719" name="get-record-exists-flow"/>
 	</flow>
